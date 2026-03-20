@@ -56,6 +56,9 @@
    docker pull ghcr.io/jagadeesh-pradhani/ros2_ardupilot_iris_docker:main
    ```
 
+### IMPORTANT FIXES
+- The SITL / gazebo / ROS integration may not work. The [QUICK_SETUP_GUIDE.md](QUICK_SETUP_GUIDE.md) will help fix the problems.
+
 ### 💻 Using Visual Studio Code DevContainer
 
 1. Install the "Remote - Containers" extension in VS Code
