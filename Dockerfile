@@ -168,6 +168,8 @@ COPY ./src/ /home/ros/ros2_ws/src/
 # Copy the entrypoint and bashrc scripts so we have our container's environment set up correctly
 COPY entrypoint.sh /entrypoint.sh
 COPY bashrc /home/${USERNAME}/.bashrc
+COPY fix_docker_container.sh /home/ros/fix_docker_container.sh
+RUN sudo chmod +x /home/ros/fix_docker_container.sh
 
 
 # Set up entrypoint and default command

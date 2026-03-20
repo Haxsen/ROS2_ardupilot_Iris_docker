@@ -57,7 +57,9 @@
    ```
 
 ### IMPORTANT FIXES
-- The SITL / gazebo / ROS integration may not work. The [QUICK_SETUP_GUIDE.md](QUICK_SETUP_GUIDE.md) will help fix the problems.
+- The SITL / gazebo / ROS integration may not work.
+- Use automated setup: [QUICK_SETUP_GUIDE_auto](QUICK_SETUP_GUIDE_auto.md)
+- Manual setup also available: [QUICK_SETUP_GUIDE_manual](QUICK_SETUP_GUIDE_manual.md)
 
 ### 💻 Using Visual Studio Code DevContainer
 
