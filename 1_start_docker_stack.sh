@@ -24,7 +24,7 @@ sleep 5
 
 # Enter container and fix it
 echo "🔧 Entering container and applying fixes..."
-docker exec $CONTAINER_NAME bash -c "cd ~ && ./fix_docker_container.sh"
+docker exec -it $CONTAINER_NAME bash -l -c "cd ~ && ./fix_docker_container.sh"
 echo "✅ Container fixed"
 
 echo ""

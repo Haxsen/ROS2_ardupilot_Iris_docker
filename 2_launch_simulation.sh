@@ -11,7 +11,7 @@ echo "=================================="
 
 # Launch simulation inside container
 echo "🚀 Starting Gazebo + ArduPilot SITL..."
-docker exec $CONTAINER_NAME bash -c "source ~/.bashrc && ros2 launch ardupilot_gz_bringup iris_runway.launch.py" &
+docker exec -it $CONTAINER_NAME bash -c "source ~/.bashrc && ros2 launch ardupilot_gz_bringup iris_runway.launch.py" &
 
 SIM_PID=$!
 echo "✅ Simulation launched in background! (PID: $SIM_PID)"

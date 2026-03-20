@@ -17,7 +17,7 @@ echo "🔗 Connecting to local ArduPilot on port $MASTER_PORT"
 echo "📤 Outputting UDP to client at $CLIENT_IP$MASTER_PORT"
 
 # Start MAVProxy inside container
-docker exec $CONTAINER_NAME bash -c "mavproxy.py --console --map --aircraft test --master=$MASTER_PORT --out=$CLIENT_IP$MASTER_PORT" &
+docker exec -it $CONTAINER_NAME bash -c "mavproxy.py --console --map --aircraft test --master=$MASTER_PORT --out=$CLIENT_IP$MASTER_PORT" &
 
 MAVPROXY_PID=$!
 echo "✅ MAVProxy connected in background! (PID: $MAVPROXY_PID)"

@@ -33,8 +33,8 @@ fi
 
 # Stop processes inside container
 echo "🔍 Stopping processes inside container..."
-docker exec $CONTAINER_NAME bash -c "pkill -f 'ros2 launch ardupilot_gz_bringup'" || true
-docker exec $CONTAINER_NAME bash -c "pkill -f 'mavproxy.py'" || true
+docker exec -it $CONTAINER_NAME bash -c "pkill -f 'ros2 launch ardupilot_gz_bringup'" || true
+docker exec -it $CONTAINER_NAME bash -c "pkill -f 'mavproxy.py'" || true
 
 echo ""
 echo "🎯 Processes stopped, container still running"
