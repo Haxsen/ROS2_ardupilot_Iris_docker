@@ -3,6 +3,9 @@
 # Stop ArduPilot ROS2 Processes (keeps container running)
 set -e
 
+# Container name (change this if needed)
+CONTAINER_NAME="ardupilot_ros"
+
 echo "🛑 Stopping ArduPilot ROS2 Processes"
 echo "=================================="
 
@@ -30,8 +33,8 @@ fi
 
 # Stop processes inside container
 echo "🔍 Stopping processes inside container..."
-docker exec ardupilot_ros bash -c "pkill -f 'ros2 launch ardupilot_gz_bringup'" || true
-docker exec ardupilot_ros bash -c "pkill -f 'mavproxy.py'" || true
+docker exec $CONTAINER_NAME bash -c "pkill -f 'ros2 launch ardupilot_gz_bringup'" || true
+docker exec $CONTAINER_NAME bash -c "pkill -f 'mavproxy.py'" || true
 
 echo ""
 echo "🎯 Processes stopped, container still running"

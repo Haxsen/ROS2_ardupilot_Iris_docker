@@ -3,6 +3,9 @@
 # ArduPilot ROS2 Docker Stack - Automated Setup
 set -e
 
+# Container name (change this if needed)
+CONTAINER_NAME="ardupilot_ros"
+
 echo "🚀 ArduPilot ROS2 Docker Stack Setup"
 echo "===================================="
 
@@ -21,7 +24,7 @@ sleep 5
 
 # Enter container and fix it
 echo "🔧 Entering container and applying fixes..."
-docker exec -it ardupilot_ros bash -c "cd ~ && ./fix_docker_container.sh"
+docker exec $CONTAINER_NAME bash -c "cd ~ && ./fix_docker_container.sh"
 echo "✅ Container fixed"
 
 echo ""
