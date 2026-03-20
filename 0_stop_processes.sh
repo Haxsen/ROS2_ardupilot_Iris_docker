@@ -8,7 +8,7 @@ echo "=================================="
 
 # Find and stop simulation processes
 echo "🔍 Finding simulation processes..."
-SIM_PIDS=$(pgrep -f "docker exec.*launch_simulation" || true)
+SIM_PIDS=$(pgrep -f "docker exec.*2_launch_simulation" || true)
 if [ -n "$SIM_PIDS" ]; then
     echo "🛑 Stopping simulation processes: $SIM_PIDS"
     echo "$SIM_PIDS" | xargs kill
@@ -19,7 +19,7 @@ fi
 
 # Find and stop MAVProxy processes
 echo "🔍 Finding MAVProxy processes..."
-MAVPROXY_PIDS=$(pgrep -f "docker exec.*start_mavproxy" || true)
+MAVPROXY_PIDS=$(pgrep -f "docker exec.*3_start_mavproxy" || true)
 if [ -n "$MAVPROXY_PIDS" ]; then
     echo "🛑 Stopping MAVProxy processes: $MAVPROXY_PIDS"
     echo "$MAVPROXY_PIDS" | xargs kill
@@ -36,5 +36,5 @@ docker exec ardupilot_ros bash -c "pkill -f 'mavproxy.py'" || true
 echo ""
 echo "🎯 Processes stopped, container still running"
 echo "📋 Container status: docker ps"
-echo "🔧 To restart processes: ./launch_simulation.sh && ./start_mavproxy.sh"
+echo "🔧 To restart processes: ./2_launch_simulation.sh && ./3_start_mavproxy.sh"
 echo "🛑 To stop container: docker compose down"

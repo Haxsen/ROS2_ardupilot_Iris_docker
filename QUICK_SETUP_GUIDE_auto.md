@@ -5,8 +5,8 @@
 Run this single script to get everything working:
 
 ```bash
-sudo chmod +x start_docker_stack.sh launch_simulation.sh start_mavproxy.sh stop_processes.sh
-./start_docker_stack.sh
+sudo chmod +x 1_start_docker_stack.sh 2_launch_simulation.sh 3_start_mavproxy.sh 0_stop_processes.sh
+./1_start_docker_stack.sh
 ```
 
 ## 📋 What This Script Does
@@ -21,14 +21,14 @@ sudo chmod +x start_docker_stack.sh launch_simulation.sh start_mavproxy.sh stop_
 ### **Launch Simulation**
 ```bash
 # From host system (recommended)
-./launch_simulation.sh
+./2_launch_simulation.sh
 # Shows PID for clean shutdown: kill <PID>
 ```
 
 ### **Start MAVProxy**
 ```bash
 # From host system (recommended)  
-./start_mavproxy.sh
+./3_start_mavproxy.sh
 # Shows PID for clean shutdown: kill <PID>
 ```
 
@@ -36,7 +36,7 @@ sudo chmod +x start_docker_stack.sh launch_simulation.sh start_mavproxy.sh stop_
 
 ```bash
 # Clean stop all processes (container keeps running)
-./stop_processes.sh
+./0_stop_processes.sh
 
 # Or manual stop:
 kill <SIMULATION_PID>
@@ -46,13 +46,13 @@ kill <MAVPROXY_PID>
 docker compose down
 
 # Force stop all processes
-pkill -f "docker exec.*launch_simulation"
-pkill -f "docker exec.*start_mavproxy"
+pkill -f "docker exec.*2_launch_simulation"
+pkill -f "docker exec.*3_start_mavproxy"
 ```
 
 ## ⚙️ Configuration
 
-Edit `start_mavproxy.sh` to change:
+Edit `3_start_mavproxy.sh` to change:
 - **Client IP**: Default `172.27.233.201`
 - **Port**: Default `:14550`
 
@@ -74,3 +74,10 @@ sudo tcpdump -ni tun0 udp port 14550
 - ✅ **Client ready** to connect via QGroundControl
 
 **Client connects to:** `172.27.233.202:14550`
+
+## 🔄 Restart Commands
+
+```bash
+# After stopping, restart processes:
+./2_launch_simulation.sh && ./3_start_mavproxy.sh
+```
