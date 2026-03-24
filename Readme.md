@@ -56,7 +56,7 @@
    docker pull ghcr.io/jagadeesh-pradhani/ros2_ardupilot_iris_docker:main
    ```
 
-### IMPORTANT FIXES
+## ❗❗ IMPORTANT FIXES ❗❗
 - The SITL / gazebo / ROS integration may not work.
 - Use automated setup: [QUICK_SETUP_GUIDE_auto](QUICK_SETUP_GUIDE_auto.md)
 - Manual setup also available: [QUICK_SETUP_GUIDE_manual](QUICK_SETUP_GUIDE_manual.md)
