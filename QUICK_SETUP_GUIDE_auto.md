@@ -19,17 +19,20 @@ sudo chmod +x 1_start_docker_stack.sh 2_launch_simulation.sh 3_start_mavproxy.sh
 ## 🎯 Individual Scripts
 
 ### **Launch Simulation**
+Launches gazebo with ros2 integration
 ```bash
-# From host system (recommended)
 ./2_launch_simulation.sh
-# Shows PID for clean shutdown: kill <PID>
 ```
 
 ### **Start MAVProxy**
+Starts MAVProxy to connect to ArduPilot and allow external connections on port 14550 (default).
 ```bash
-# From host system (recommended)  
+CLIENT_IP=YOUR_VPN_PROVIDED_IP ./3_start_mavproxy.sh
+```
+OR
+```bash
+export CLIENT_IP=YOUR_VPN_PROVIDED_IP
 ./3_start_mavproxy.sh
-# Shows PID for clean shutdown: kill <PID>
 ```
 
 ## 🛑 Stopping Processes
@@ -37,33 +40,16 @@ sudo chmod +x 1_start_docker_stack.sh 2_launch_simulation.sh 3_start_mavproxy.sh
 ```bash
 # Clean stop all processes (container keeps running)
 ./0_stop_processes.sh
-
-# Or manual stop:
-kill <SIMULATION_PID>
-kill <MAVPROXY_PID>
-
-# Stop container completely
-docker compose down
-
-# Force stop all processes
-pkill -f "docker exec.*2_launch_simulation"
-pkill -f "docker exec.*3_start_mavproxy"
 ```
-
-## ⚙️ Configuration
-
-Edit `3_start_mavproxy.sh` to change:
-- **Client IP**: Default `172.27.233.201`
-- **Port**: Default `:14550`
 
 ## 📊 Monitoring
 
 ```bash
-# ROS2 topics
-docker exec -it ardupilot_ros bash -c "source ~/.bashrc && ros2 topic list"
-
 # UDP traffic (host)
 sudo tcpdump -ni tun0 udp port 14550
+
+# ROS2 topics
+docker exec -it ardupilot_ros bash -c "source ~/.bashrc && ros2 topic list"
 ```
 
 ## ✅ Success Indicators
@@ -73,7 +59,9 @@ sudo tcpdump -ni tun0 udp port 14550
 - ✅ **UDP traffic** visible in tcpdump
 - ✅ **Client ready** to connect via QGroundControl
 
-**Client connects to:** `172.27.233.202:14550`
+**QGroundControl Connection:**
+- **Host**: `172.27.233.202` (VM's VPN IP)
+- **Port**: `14550`
 
 ## 🔄 Restart Commands
 
@@ -81,3 +69,8 @@ sudo tcpdump -ni tun0 udp port 14550
 # After stopping, restart processes:
 ./2_launch_simulation.sh && ./3_start_mavproxy.sh
 ```
+
+## 📝 Possible errors and fixes
+
+- Gazebo GUI launches but hangs / crashes on `2_launch_simulation.sh`.
+    - Check and fix the display env var in [docker-compose.yml](./docker-compose.yml) (`DISPLAY=<value>`).

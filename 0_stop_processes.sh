@@ -9,35 +9,20 @@ CONTAINER_NAME="ardupilot_ros"
 echo "🛑 Stopping ArduPilot ROS2 Processes"
 echo "=================================="
 
-# Find and stop simulation processes
-echo "🔍 Finding simulation processes..."
-SIM_PIDS=$(pgrep -f "docker exec.*2_launch_simulation" || true)
-if [ -n "$SIM_PIDS" ]; then
-    echo "🛑 Stopping simulation processes: $SIM_PIDS"
-    echo "$SIM_PIDS" | xargs kill
-    echo "✅ Simulation stopped"
-else
-    echo "ℹ️ No simulation processes found"
-fi
-
-# Find and stop MAVProxy processes
-echo "🔍 Finding MAVProxy processes..."
-MAVPROXY_PIDS=$(pgrep -f "docker exec.*3_start_mavproxy" || true)
-if [ -n "$MAVPROXY_PIDS" ]; then
-    echo "🛑 Stopping MAVProxy processes: $MAVPROXY_PIDS"
-    echo "$MAVPROXY_PIDS" | xargs kill
-    echo "✅ MAVProxy stopped"
-else
-    echo "ℹ️ No MAVProxy processes found"
-fi
-
-# Stop processes inside container
-echo "🔍 Stopping processes inside container..."
-docker exec -it $CONTAINER_NAME bash -c "pkill -f 'ros2 launch ardupilot_gz_bringup'" || true
-docker exec -it $CONTAINER_NAME bash -c "pkill -f 'mavproxy.py'" || true
+# Force kill all processes
+echo "🔍 Force killing processes..."
+GAZEBO_COUNT=$(pgrep -f "gazebo" | wc -l || echo "0")
+GAZEBO_KILLED=$(pkill -9 -f "gazebo" && echo "gazebo processes killed ($GAZEBO_COUNT killed)" || echo "no gazebo processes found")
+GZSIM_COUNT=$(pgrep -f "gz sim" | wc -l || echo "0")
+GZSIM_KILLED=$(pkill -9 -f "gz sim" && echo "gz sim processes killed ($GZSIM_COUNT killed)" || echo "no gz sim processes found")
+MAVPROXY_COUNT=$(pgrep -f "mavproxy" | wc -l || echo "0")
+MAVPROXY_KILLED=$(pkill -9 -f "mavproxy" && echo "mavproxy processes killed ($MAVPROXY_COUNT killed)" || echo "no mavproxy processes found")
+echo "  $GAZEBO_KILLED"
+echo "  $GZSIM_KILLED"
+echo "  $MAVPROXY_KILLED"
 
 echo ""
-echo "🎯 Processes stopped, container still running"
+echo "✅ All processes stopped, container still running"
 echo "📋 Container status: docker ps"
-echo "🔧 To restart processes: ./2_launch_simulation.sh && ./3_start_mavproxy.sh"
+echo "🔧 To restart: ./2_launch_simulation.sh && ./3_start_mavproxy.sh"
 echo "🛑 To stop container: docker compose down"
