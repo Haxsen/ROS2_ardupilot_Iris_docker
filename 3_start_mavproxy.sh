@@ -7,7 +7,7 @@ set -e
 CONTAINER_NAME="ardupilot_ros"
 
 # Configuration - Change these as needed
-CLIENT_IP="172.27.233.201"
+CLIENT_IP="${CLIENT_IP:-172.27.233.201}"
 MASTER_PORT=":14550"
 
 echo "📡 Starting MAVProxy"
